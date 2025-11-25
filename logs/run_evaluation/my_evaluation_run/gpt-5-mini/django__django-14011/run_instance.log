@@ -1,0 +1,79 @@
+2025-11-25 01:19:54,086 - INFO - Creating container for django__django-14011...
+2025-11-25 01:19:54,132 - INFO - Container for django__django-14011 created: 30becee660cc4fafae869b87e9df47449ca22f5861a02afdbed8b949d0f4c44e
+2025-11-25 01:19:59,726 - INFO - Container for django__django-14011 started: 30becee660cc4fafae869b87e9df47449ca22f5861a02afdbed8b949d0f4c44e
+2025-11-25 01:19:59,726 - INFO - Intermediate patch for django__django-14011 written to logs/run_evaluation/my_evaluation_run/gpt-5-mini/django__django-14011/patch.diff, now applying to container...
+2025-11-25 01:19:59,816 - INFO - >>>>> Applied Patch:
+Checking patch django/core/servers/basehttp.py...
+Applied patch django/core/servers/basehttp.py cleanly.
+
+2025-11-25 01:20:00,530 - INFO - Git diff before:
+diff --git a/django/core/servers/basehttp.py b/django/core/servers/basehttp.py
+index 14dab517c9..5071ea3e86 100644
+--- a/django/core/servers/basehttp.py
++++ b/django/core/servers/basehttp.py
+@@ -16,6 +16,7 @@ from wsgiref import simple_server
+ from django.core.exceptions import ImproperlyConfigured
+ from django.core.handlers.wsgi import LimitedStream
+ from django.core.wsgi import get_wsgi_application
++from django.db import connections
+ from django.utils.module_loading import import_string
+ 
+ __all__ = ('WSGIServer', 'WSGIRequestHandler')
+@@ -116,6 +117,17 @@ class ServerHandler(simple_server.ServerHandler):
+     def close(self):
+         self.get_stdin()._read_limited()
+         super().close()
++        # Ensure this request-handling thread closes any DB connections it
++        # opened. connections.close_all() closes connections for the current
++        # thread only, so it's safe to call here and prevents test teardown
++        # races where the test DB is destroyed while other threads still hold
++        # open connections.
++        try:
++            connections.close_all()
++        except Exception:
++            # Be defensive: don't let DB cleanup errors interfere with server
++            # shutdown path.
++            logger.debug('Error closing DB connections in ServerHandler.close()', exc_info=True)
+ 
+ 
+ class WSGIRequestHandler(simple_server.WSGIRequestHandler):
+2025-11-25 01:20:00,530 - INFO - Eval script for django__django-14011 written to logs/run_evaluation/my_evaluation_run/gpt-5-mini/django__django-14011/eval.sh; copying to container...
+2025-11-25 01:20:06,268 - INFO - Test runtime: 5.65 seconds
+2025-11-25 01:20:06,269 - INFO - Test output for django__django-14011 written to logs/run_evaluation/my_evaluation_run/gpt-5-mini/django__django-14011/test_output.txt
+2025-11-25 01:20:06,358 - INFO - Git diff after:
+diff --git a/django/core/servers/basehttp.py b/django/core/servers/basehttp.py
+index 14dab517c9..5071ea3e86 100644
+--- a/django/core/servers/basehttp.py
++++ b/django/core/servers/basehttp.py
+@@ -16,6 +16,7 @@ from wsgiref import simple_server
+ from django.core.exceptions import ImproperlyConfigured
+ from django.core.handlers.wsgi import LimitedStream
+ from django.core.wsgi import get_wsgi_application
++from django.db import connections
+ from django.utils.module_loading import import_string
+ 
+ __all__ = ('WSGIServer', 'WSGIRequestHandler')
+@@ -116,6 +117,17 @@ class ServerHandler(simple_server.ServerHandler):
+     def close(self):
+         self.get_stdin()._read_limited()
+         super().close()
++        # Ensure this request-handling thread closes any DB connections it
++        # opened. connections.close_all() closes connections for the current
++        # thread only, so it's safe to call here and prevents test teardown
++        # races where the test DB is destroyed while other threads still hold
++        # open connections.
++        try:
++            connections.close_all()
++        except Exception:
++            # Be defensive: don't let DB cleanup errors interfere with server
++            # shutdown path.
++            logger.debug('Error closing DB connections in ServerHandler.close()', exc_info=True)
+ 
+ 
+ class WSGIRequestHandler(simple_server.WSGIRequestHandler):
+2025-11-25 01:20:06,358 - INFO - Grading answer for django__django-14011...
+2025-11-25 01:20:06,359 - INFO - report: {'django__django-14011': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_live_server_url_is_class_property (servers.tests.LiveServerAddress)', 'Data written to the database by a view can be read.', 'Fixtures are properly loaded and visible to the live server thread.', 'test_check_model_instance_from_subview (servers.tests.LiveServerThreadedTests)', 'test_view_calls_subview (servers.tests.LiveServerThreadedTests)', 'test_404 (servers.tests.LiveServerViews)', 'A HTTP 1.1 server is supposed to support keep-alive. Since our', 'test_environ (servers.tests.LiveServerViews)', 'test_keep_alive_connection_clears_previous_request_data (servers.tests.LiveServerViews)', 'See `test_closes_connection_without_content_length` for details. This', 'test_media_files (servers.tests.LiveServerViews)', 'LiveServerTestCase reports a 404 status code when HTTP client', 'Launched server serves with HTTP 1.1.', 'test_static_files (servers.tests.LiveServerViews)', 'test_view (servers.tests.LiveServerViews)', 'Each LiveServerTestCase binds to a unique port or fails to start a', "LiveServerTestCase.port customizes the server's port."]}, 'PASS_TO_PASS': {'success': ['test_set_up_class (servers.tests.LiveServerTestCaseSetupTest)', 'Contrast to'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-14011: resolved: False
+2025-11-25 01:20:06,360 - INFO - Attempting to stop container sweb.eval.django__django-14011.my_evaluation_run...
+2025-11-25 01:20:21,898 - INFO - Attempting to remove container sweb.eval.django__django-14011.my_evaluation_run...
+2025-11-25 01:20:21,924 - INFO - Container sweb.eval.django__django-14011.my_evaluation_run removed.

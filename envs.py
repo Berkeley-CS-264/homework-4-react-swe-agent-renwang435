@@ -17,14 +17,14 @@ class SWEEnvironment:
     def __init__(self, instance: dict):
         self.env = get_sb_environment(instance)
         self.instance = instance  # Store instance for test execution
-     
+
     # -------------------- REQUIRED TOOLS --------------------
     def run_bash_cmd(self, command: str) -> str:
         """
         Run the command in a bash shell and return the output or throw a ValueError
         if the process returns non-zero exit code.
 
-        Args;
+        Args:
             command (str): the shell command to run
 
         Returns:
@@ -32,29 +32,29 @@ class SWEEnvironment:
         """
         try:
             output = self.env.execute(command)
-            
+
             # Handle case where execute returns a dict instead of string
             if isinstance(output, dict):
                 output = output.get("output", "") or output.get("stdout", "")
-                
+
         except subprocess.TimeoutExpired as e:
             output = e.output.decode("utf-8", errors="replace") if e.output else ""
             raise ValueError(output)
         except TimeoutError:
             raise ValueError("TimeoutError")
         return output
-    
+
     def generate_patch(self, result: str) -> str:
         """
-        Generate a patch from the result (for SWE-Bench)
+        Generate a patch from the current git workspace (for SWE-Bench).
         """
         try:
             patch_output = self.env.execute("git add -A && git diff --cached")
-            
+
             # Handle case where execute returns a dict instead of string
             if isinstance(patch_output, dict):
                 patch_output = patch_output.get("output", "") or patch_output.get("stdout", "")
-            
+
             if patch_output and patch_output.strip():
                 return patch_output
             else:
@@ -62,22 +62,50 @@ class SWEEnvironment:
         except Exception as e:
             return f"{result}\n\nError running git commands: {e}"
 
-    # -------------------- TODO(student): add more functions here if you want, not required --------------------
     def replace_in_file(self, file_path: str, from_line: int, to_line: int, content: str) -> str:
         """
         [Optional] Replace the content of the file from the given line to the given line with the given content
         """
-        raise NotImplementedError("replace_in_file must be implemented by the student")
+        if from_line <= 0 or to_line < from_line:
+            raise ValueError("Invalid line range for replace_in_file.")
+
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                lines = f.readlines()
+        except FileNotFoundError:
+            raise ValueError(f"File not found: {file_path}")
+
+        if to_line > len(lines):
+            raise ValueError(
+                f"to_line ({to_line}) exceeds number of lines in file ({len(lines)})."
+            )
+
+        # Convert to 0-based indices
+        start_idx = from_line - 1
+        end_idx = to_line
+
+        new_lines = lines[:start_idx] + [content + "\n"] + lines[end_idx:]
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.writelines(new_lines)
+
+        return (
+            f"Replaced lines {from_line}-{to_line} in '{file_path}' with new content."
+        )
 
     def show_file(self, file_path: str) -> str:
         """
         [Optional]Show the content of the file
         """
-        raise NotImplementedError("show_file must be implemented by the student")
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                return f.read()
+        except FileNotFoundError:
+            raise ValueError(f"File not found: {file_path}")
+
 
 class DumbEnvironment:
     """
-    Dumb environment that just executes the command
+    Dumb environment that just executes the command on the local shell.
     """
 
     def execute(self, command: str) -> str:
@@ -90,12 +118,16 @@ class DumbEnvironment:
         Returns:
             The output of running the shell command
         """
-        result = subprocess.run(command, capture_output=True, shell=True, check=False)
-        output = f"--STDOUT--\n{result.stdout.decode()}\n--STDERR--\n{result.stderr.decode()}"
+        result = subprocess.run(
+            command, capture_output=True, shell=True, check=False
+        )
+        output = (
+            f"--STDOUT--\n{result.stdout.decode()}\n--STDERR--\n{result.stderr.decode()}"
+        )
         if result.returncode:
             raise ValueError(output)
         return output
-    
+
     def run_bash_cmd(self, command: str) -> str:
         """
         Run the command in a bash shell and return the output or throw a ValueError

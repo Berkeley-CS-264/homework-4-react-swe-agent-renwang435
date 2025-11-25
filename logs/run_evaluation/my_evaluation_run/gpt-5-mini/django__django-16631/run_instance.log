@@ -1,0 +1,323 @@
+2025-11-25 01:20:15,296 - INFO - Creating container for django__django-16631...
+2025-11-25 01:20:15,320 - INFO - Container for django__django-16631 created: 8d04aa73a74679e8d848e09f16ad474fecb847f6ad1b60e3512de3f26bc0e636
+2025-11-25 01:20:16,001 - INFO - Container for django__django-16631 started: 8d04aa73a74679e8d848e09f16ad474fecb847f6ad1b60e3512de3f26bc0e636
+2025-11-25 01:20:16,002 - INFO - Intermediate patch for django__django-16631 written to logs/run_evaluation/my_evaluation_run/gpt-5-mini/django__django-16631/patch.diff, now applying to container...
+2025-11-25 01:20:16,176 - INFO - >>>>> Applied Patch:
+Checking patch docs/ref/checks.txt...
+Checking patch docs/ref/settings.txt...
+Checking patch docs/topics/auth/default.txt...
+Checking patch docs/topics/http/sessions.txt...
+Checking patch docs/topics/security.txt...
+Applied patch docs/ref/checks.txt cleanly.
+Applied patch docs/ref/settings.txt cleanly.
+Applied patch docs/topics/auth/default.txt cleanly.
+Applied patch docs/topics/http/sessions.txt cleanly.
+Applied patch docs/topics/security.txt cleanly.
+
+2025-11-25 01:20:16,972 - INFO - Git diff before:
+diff --git a/docs/ref/checks.txt b/docs/ref/checks.txt
+index fa7c633487..c187fe970b 100644
+--- a/docs/ref/checks.txt
++++ b/docs/ref/checks.txt
+@@ -523,6 +523,15 @@ The following checks are run if you use the :option:`check --deploy` option:
+   :setting:`SECURE_CROSS_ORIGIN_OPENER_POLICY` setting to an invalid value.
+ * **security.W025**: Your
+   :setting:`SECRET_KEY_FALLBACKS[n] <SECRET_KEY_FALLBACKS>` has less than 50
++
++.. note::
++
++    The default session authentication hash (see :meth:`~django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash()`)
++    is derived from :setting:`SECRET_KEY` and does not consult
++    :setting:`SECRET_KEY_FALLBACKS`. Rotating :setting:`SECRET_KEY` will
++    invalidate sessions authenticated with the previous key; consider this
++    when planning key rotation.
++
+   characters, less than 5 unique characters, or it's prefixed with
+   ``'django-insecure-'`` indicating that it was generated automatically by
+   Django. Please generate a long and random value, otherwise many of Django's
+diff --git a/docs/ref/settings.txt b/docs/ref/settings.txt
+index 41387886c0..3a2baf1f0f 100644
+--- a/docs/ref/settings.txt
++++ b/docs/ref/settings.txt
+@@ -2265,7 +2265,6 @@ Django will refuse to start if :setting:`SECRET_KEY` is not set.
+     Running Django with a known :setting:`SECRET_KEY` defeats many of Django's
+     security protections, and can lead to privilege escalation and remote code
+     execution vulnerabilities.
+-
+ The secret key is used for:
+ 
+ * All :doc:`sessions </topics/http/sessions>` if you are using
+@@ -2282,8 +2281,19 @@ The secret key is used for:
+ When a secret key is no longer set as :setting:`SECRET_KEY` or contained within
+ :setting:`SECRET_KEY_FALLBACKS` all of the above will be invalidated. When
+ rotating your secret key, you should move the old key to
+-:setting:`SECRET_KEY_FALLBACKS` temporarily. Secret keys are not used for
+-passwords of users and key rotation will not affect them.
++:setting:`SECRET_KEY_FALLBACKS` temporarily. However, note the following important limitation:
++
++* The default session authentication hash produced by
++  :meth:`~django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash()`
++  calls :func:`django.utils.crypto.salted_hmac` without an explicit ``secret``
++  argument, which means it uses only the active :setting:`SECRET_KEY`. As a
++  consequence, adding an old key to :setting:`SECRET_KEY_FALLBACKS` does
++  not preserve existing sessions authenticated with the previous key; rotating
++  :setting:`SECRET_KEY` will invalidate those sessions. If you need to avoid
++  logging users out during a key rotation, consider using a session backend
++  that does not rely on :setting:`SECRET_KEY` for session authentication (for
++  example, a cache-based backend), or perform the rotation during a planned
++  maintenance window.
+ 
+ .. note::
+ 
+@@ -2299,12 +2309,19 @@ passwords of users and key rotation will not affect them.
+ Default: ``[]``
+ 
+ A list of fallback secret keys for a particular Django installation. These are
+-used to allow rotation of the ``SECRET_KEY``.
++used to allow rotation of the ``SECRET_KEY`` for many signing operations.
++
++:setting:`SECRET_KEY_FALLBACKS` is consulted by the signing infrastructure
++(e.g. :func:`django.core.signing.dumps`/``Signer`` implementations and the
++cookie signer) and by token generators that explicitly check fallback keys
++(such as the password reset token generator). This allows previously-issued
++signed values produced with an older key to be validated during a rotation
++period.
+ 
+ In order to rotate your secret keys, set a new ``SECRET_KEY`` and move the
+ previous value to the beginning of ``SECRET_KEY_FALLBACKS``. Then remove the
+-old values from the end of the ``SECRET_KEY_FALLBACKS`` when you are ready to
+-expire the sessions, password reset tokens, and so on, that make use of them.
++old values from the end of ``SECRET_KEY_FALLBACKS`` when you are ready to
++expire the tokens, signed cookies, and so on, that make use of them.
+ 
+ .. note::
+ 
+diff --git a/docs/topics/auth/default.txt b/docs/topics/auth/default.txt
+index c705abcb6b..05c608bd80 100644
+--- a/docs/topics/auth/default.txt
++++ b/docs/topics/auth/default.txt
+@@ -957,11 +957,20 @@ function.
+ 
+ .. note::
+ 
+-    Since
++    The default session authentication hash returned by
+     :meth:`~django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash()`
+-    is based on :setting:`SECRET_KEY`, secret key values must be
+-    rotated to avoid invalidating existing sessions when updating your site to
+-    use a new secret. See :setting:`SECRET_KEY_FALLBACKS` for details.
++    is derived using :setting:`SECRET_KEY`. However, that method does not
++    pass an explicit secret to :func:`django.utils.crypto.salted_hmac`, so it
++    uses only the active :setting:`SECRET_KEY` and does not consult
++    :setting:`SECRET_KEY_FALLBACKS`. As a result, moving an old key into
++    :setting:`SECRET_KEY_FALLBACKS` will not preserve existing sessions that
++    were authenticated with the previous key; rotating :setting:`SECRET_KEY`
++    will invalidate those sessions.
++
++    For details on which signing operations do consult
++    :setting:`SECRET_KEY_FALLBACKS` and guidance on rotating keys, see
++    :setting:`SECRET_KEY_FALLBACKS` in the settings reference.
++
+ 
+ .. _built-in-auth-views:
+ 
+diff --git a/docs/topics/http/sessions.txt b/docs/topics/http/sessions.txt
+index 4f635f1704..7c91c95fae 100644
+--- a/docs/topics/http/sessions.txt
++++ b/docs/topics/http/sessions.txt
+@@ -326,7 +326,14 @@ cookie backend*.
+ For example, here's an attack scenario if you use :mod:`pickle` to serialize
+ session data. If you're using the :ref:`signed cookie session backend
+ <cookie-session-backend>` and :setting:`SECRET_KEY` (or any key of
+-:setting:`SECRET_KEY_FALLBACKS`) is known by an attacker (there isn't an
++:setting:`SECRET_KEY_FALLBACKS`)
++
++.. note::
++
++    The default session authentication hash (see :meth:`~django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash()`)
++    is derived from :setting:`SECRET_KEY` and does not consult :setting:`SECRET_KEY_FALLBACKS`. Rotating :setting:`SECRET_KEY`
++    will therefore invalidate sessions authenticated with the previous key. See :setting:`SECRET_KEY_FALLBACKS` in the settings reference for the full explanation and suggested mitigations.
++ is known by an attacker (there isn't an
+ inherent vulnerability in Django that would cause it to leak), the attacker
+ could insert a string into their session which, when unpickled, executes
+ arbitrary code on the server. The technique for doing so is simple and easily
+diff --git a/docs/topics/security.txt b/docs/topics/security.txt
+index 0f6f05163a..b84550a27c 100644
+--- a/docs/topics/security.txt
++++ b/docs/topics/security.txt
+@@ -294,6 +294,17 @@ security protection of the web server, operating system and other components.
+   deploying a Django plugin or web server module to throttle these requests.
+ * Keep your :setting:`SECRET_KEY`, and :setting:`SECRET_KEY_FALLBACKS` if in
+   use, secret.
++
++.. note::
++
++    The default session authentication hash returned by
++    :meth:`~django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash()`
++    is derived from :setting:`SECRET_KEY` and does not consult
++    :setting:`SECRET_KEY_FALLBACKS`. Rotating :setting:`SECRET_KEY` will
++    therefore invalidate sessions that were authenticated with the previous
++    key. See :setting:`SECRET_KEY_FALLBACKS` in the settings reference for the
++    full explanation and suggested mitigations.
++
+ * It is a good idea to limit the accessibility of your caching system and
+   database using a firewall.
+ * Take a look at the Open Web Application Security Project (OWASP) `Top 10
+2025-11-25 01:20:16,972 - INFO - Eval script for django__django-16631 written to logs/run_evaluation/my_evaluation_run/gpt-5-mini/django__django-16631/eval.sh; copying to container...
+2025-11-25 01:20:21,908 - INFO - Test runtime: 4.84 seconds
+2025-11-25 01:20:21,909 - INFO - Test output for django__django-16631 written to logs/run_evaluation/my_evaluation_run/gpt-5-mini/django__django-16631/test_output.txt
+2025-11-25 01:20:22,004 - INFO - Git diff after:
+diff --git a/docs/ref/checks.txt b/docs/ref/checks.txt
+index fa7c633487..c187fe970b 100644
+--- a/docs/ref/checks.txt
++++ b/docs/ref/checks.txt
+@@ -523,6 +523,15 @@ The following checks are run if you use the :option:`check --deploy` option:
+   :setting:`SECURE_CROSS_ORIGIN_OPENER_POLICY` setting to an invalid value.
+ * **security.W025**: Your
+   :setting:`SECRET_KEY_FALLBACKS[n] <SECRET_KEY_FALLBACKS>` has less than 50
++
++.. note::
++
++    The default session authentication hash (see :meth:`~django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash()`)
++    is derived from :setting:`SECRET_KEY` and does not consult
++    :setting:`SECRET_KEY_FALLBACKS`. Rotating :setting:`SECRET_KEY` will
++    invalidate sessions authenticated with the previous key; consider this
++    when planning key rotation.
++
+   characters, less than 5 unique characters, or it's prefixed with
+   ``'django-insecure-'`` indicating that it was generated automatically by
+   Django. Please generate a long and random value, otherwise many of Django's
+diff --git a/docs/ref/settings.txt b/docs/ref/settings.txt
+index 41387886c0..3a2baf1f0f 100644
+--- a/docs/ref/settings.txt
++++ b/docs/ref/settings.txt
+@@ -2265,7 +2265,6 @@ Django will refuse to start if :setting:`SECRET_KEY` is not set.
+     Running Django with a known :setting:`SECRET_KEY` defeats many of Django's
+     security protections, and can lead to privilege escalation and remote code
+     execution vulnerabilities.
+-
+ The secret key is used for:
+ 
+ * All :doc:`sessions </topics/http/sessions>` if you are using
+@@ -2282,8 +2281,19 @@ The secret key is used for:
+ When a secret key is no longer set as :setting:`SECRET_KEY` or contained within
+ :setting:`SECRET_KEY_FALLBACKS` all of the above will be invalidated. When
+ rotating your secret key, you should move the old key to
+-:setting:`SECRET_KEY_FALLBACKS` temporarily. Secret keys are not used for
+-passwords of users and key rotation will not affect them.
++:setting:`SECRET_KEY_FALLBACKS` temporarily. However, note the following important limitation:
++
++* The default session authentication hash produced by
++  :meth:`~django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash()`
++  calls :func:`django.utils.crypto.salted_hmac` without an explicit ``secret``
++  argument, which means it uses only the active :setting:`SECRET_KEY`. As a
++  consequence, adding an old key to :setting:`SECRET_KEY_FALLBACKS` does
++  not preserve existing sessions authenticated with the previous key; rotating
++  :setting:`SECRET_KEY` will invalidate those sessions. If you need to avoid
++  logging users out during a key rotation, consider using a session backend
++  that does not rely on :setting:`SECRET_KEY` for session authentication (for
++  example, a cache-based backend), or perform the rotation during a planned
++  maintenance window.
+ 
+ .. note::
+ 
+@@ -2299,12 +2309,19 @@ passwords of users and key rotation will not affect them.
+ Default: ``[]``
+ 
+ A list of fallback secret keys for a particular Django installation. These are
+-used to allow rotation of the ``SECRET_KEY``.
++used to allow rotation of the ``SECRET_KEY`` for many signing operations.
++
++:setting:`SECRET_KEY_FALLBACKS` is consulted by the signing infrastructure
++(e.g. :func:`django.core.signing.dumps`/``Signer`` implementations and the
++cookie signer) and by token generators that explicitly check fallback keys
++(such as the password reset token generator). This allows previously-issued
++signed values produced with an older key to be validated during a rotation
++period.
+ 
+ In order to rotate your secret keys, set a new ``SECRET_KEY`` and move the
+ previous value to the beginning of ``SECRET_KEY_FALLBACKS``. Then remove the
+-old values from the end of the ``SECRET_KEY_FALLBACKS`` when you are ready to
+-expire the sessions, password reset tokens, and so on, that make use of them.
++old values from the end of ``SECRET_KEY_FALLBACKS`` when you are ready to
++expire the tokens, signed cookies, and so on, that make use of them.
+ 
+ .. note::
+ 
+diff --git a/docs/topics/auth/default.txt b/docs/topics/auth/default.txt
+index c705abcb6b..05c608bd80 100644
+--- a/docs/topics/auth/default.txt
++++ b/docs/topics/auth/default.txt
+@@ -957,11 +957,20 @@ function.
+ 
+ .. note::
+ 
+-    Since
++    The default session authentication hash returned by
+     :meth:`~django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash()`
+-    is based on :setting:`SECRET_KEY`, secret key values must be
+-    rotated to avoid invalidating existing sessions when updating your site to
+-    use a new secret. See :setting:`SECRET_KEY_FALLBACKS` for details.
++    is derived using :setting:`SECRET_KEY`. However, that method does not
++    pass an explicit secret to :func:`django.utils.crypto.salted_hmac`, so it
++    uses only the active :setting:`SECRET_KEY` and does not consult
++    :setting:`SECRET_KEY_FALLBACKS`. As a result, moving an old key into
++    :setting:`SECRET_KEY_FALLBACKS` will not preserve existing sessions that
++    were authenticated with the previous key; rotating :setting:`SECRET_KEY`
++    will invalidate those sessions.
++
++    For details on which signing operations do consult
++    :setting:`SECRET_KEY_FALLBACKS` and guidance on rotating keys, see
++    :setting:`SECRET_KEY_FALLBACKS` in the settings reference.
++
+ 
+ .. _built-in-auth-views:
+ 
+diff --git a/docs/topics/http/sessions.txt b/docs/topics/http/sessions.txt
+index 4f635f1704..7c91c95fae 100644
+--- a/docs/topics/http/sessions.txt
++++ b/docs/topics/http/sessions.txt
+@@ -326,7 +326,14 @@ cookie backend*.
+ For example, here's an attack scenario if you use :mod:`pickle` to serialize
+ session data. If you're using the :ref:`signed cookie session backend
+ <cookie-session-backend>` and :setting:`SECRET_KEY` (or any key of
+-:setting:`SECRET_KEY_FALLBACKS`) is known by an attacker (there isn't an
++:setting:`SECRET_KEY_FALLBACKS`)
++
++.. note::
++
++    The default session authentication hash (see :meth:`~django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash()`)
++    is derived from :setting:`SECRET_KEY` and does not consult :setting:`SECRET_KEY_FALLBACKS`. Rotating :setting:`SECRET_KEY`
++    will therefore invalidate sessions authenticated with the previous key. See :setting:`SECRET_KEY_FALLBACKS` in the settings reference for the full explanation and suggested mitigations.
++ is known by an attacker (there isn't an
+ inherent vulnerability in Django that would cause it to leak), the attacker
+ could insert a string into their session which, when unpickled, executes
+ arbitrary code on the server. The technique for doing so is simple and easily
+diff --git a/docs/topics/security.txt b/docs/topics/security.txt
+index 0f6f05163a..b84550a27c 100644
+--- a/docs/topics/security.txt
++++ b/docs/topics/security.txt
+@@ -294,6 +294,17 @@ security protection of the web server, operating system and other components.
+   deploying a Django plugin or web server module to throttle these requests.
+ * Keep your :setting:`SECRET_KEY`, and :setting:`SECRET_KEY_FALLBACKS` if in
+   use, secret.
++
++.. note::
++
++    The default session authentication hash returned by
++    :meth:`~django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash()`
++    is derived from :setting:`SECRET_KEY` and does not consult
++    :setting:`SECRET_KEY_FALLBACKS`. Rotating :setting:`SECRET_KEY` will
++    therefore invalidate sessions that were authenticated with the previous
++    key. See :setting:`SECRET_KEY_FALLBACKS` in the settings reference for the
++    full explanation and suggested mitigations.
++
+ * It is a good idea to limit the accessibility of your caching system and
+   database using a firewall.
+ * Take a look at the Open Web Application Security Project (OWASP) `Top 10
+2025-11-25 01:20:22,004 - INFO - Grading answer for django__django-16631...
+2025-11-25 01:20:22,005 - INFO - report: {'django__django-16631': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_get_user_fallback_secret (auth_tests.test_basic.TestGetUser.test_get_user_fallback_secret)']}, 'PASS_TO_PASS': {'success': ['test_get_user (auth_tests.test_basic.TestGetUser.test_get_user)', 'test_get_user_anonymous (auth_tests.test_basic.TestGetUser.test_get_user_anonymous)', 'The current user model can be retrieved', 'Check the creation and properties of a superuser', 'test_superuser_no_email_or_password (auth_tests.test_basic.BasicTestCase.test_superuser_no_email_or_password)', 'The current user model can be swapped out for another', 'The alternate user setting must point to something in the format app.model', 'The current user model must point to an installed model', 'test_unicode_username (auth_tests.test_basic.BasicTestCase.test_unicode_username)', 'Users can be created and can set their password', 'Users can be created without an email', 'Default User model verbose names are translatable (#19945)'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for django__django-16631: resolved: False
+2025-11-25 01:20:22,005 - INFO - Attempting to stop container sweb.eval.django__django-16631.my_evaluation_run...
+2025-11-25 01:20:37,400 - INFO - Attempting to remove container sweb.eval.django__django-16631.my_evaluation_run...
+2025-11-25 01:20:37,423 - INFO - Container sweb.eval.django__django-16631.my_evaluation_run removed.

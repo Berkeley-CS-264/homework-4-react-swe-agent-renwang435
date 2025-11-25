@@ -1,0 +1,163 @@
+diff --git a/requests/models.py b/requests/models.py
+index 9c624d3..601e1df 100644
+--- a/requests/models.py
++++ b/requests/models.py
+@@ -444,11 +444,22 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
+                 (body, content_type) = self._encode_files(files, data)
+             else:
+                 if data:
+-                    body = self._encode_params(data)
+-                    if isinstance(data, basestring) or hasattr(data, 'read'):
++                    # If the data is raw bytes/bytearray, preserve it as the body
++                    # (do not pass it through _encode_params). This ensures that
++                    # binary payloads (e.g. u"ööö".encode("utf-8")) are sent
++                    # unchanged. For other types, form-encode as before.
++                    if isinstance(data, (bytes, bytearray)):
++                        body = data
++                        # Treat raw bytes as a string-like body for the purposes
++                        # of content-type handling (consistent with prior behavior
++                        # where bytes were coerced to native strings).
+                         content_type = None
+                     else:
+-                        content_type = 'application/x-www-form-urlencoded'
++                        body = self._encode_params(data)
++                        if isinstance(data, basestring) or hasattr(data, 'read'):
++                            content_type = None
++                        else:
++                            content_type = 'application/x-www-form-urlencoded'
+ 
+             self.prepare_content_length(body)
+ 
+diff --git a/requests/utils.py b/requests/utils.py
+index 132cd2b..9c53ff4 100644
+--- a/requests/utils.py
++++ b/requests/utils.py
+@@ -701,7 +701,6 @@ def to_native_string(string, encoding='ascii'):
+ 
+     return out
+ 
+-
+ def urldefragauth(url):
+     """
+     Given a url remove the fragment and the authentication part
+diff --git a/test_binary_body.py b/test_binary_body.py
+new file mode 100644
+index 0000000..9cc4b8e
+--- /dev/null
++++ b/test_binary_body.py
+@@ -0,0 +1,9 @@
++# Test that binary payloads passed as `data` are preserved and not decoded.
++# This guards against regressions where to_native_string or other preparation
++# logic would coerce bytes into str and corrupt binary bodies.
++import requests
++
++def test_bytes_data_preserved_in_prepared_request():
++    data = u"ööö".encode("utf-8")
++    req = requests.Request('PUT', 'http://example.com', data=data).prepare()
++    assert req.body == data
+diff --git a/test_binary_body_additional.py b/test_binary_body_additional.py
+new file mode 100644
+index 0000000..ad30162
+--- /dev/null
++++ b/test_binary_body_additional.py
+@@ -0,0 +1,31 @@
++# Additional focused tests for binary request body preservation:
++# - non-UTF encodings (latin-1)
++# - generator/stream bodies preserved (not coerced)
++# - passing bytes as params edge case already covered, but add one more check
++import requests
++import types
++
++def test_latin1_encoded_bytes_preserved_in_prepared_request():
++    # Use a byte sequence that is valid latin-1 but may not be valid utf-8
++    # (here we include byte 0xA3 — '£' in latin1).
++    data = 'price=\xa3'.encode('latin-1')  # bytes containing 0xA3
++    req = requests.Request('POST', 'http://example.com', data=data).prepare()
++    assert req.body == data
++
++def test_generator_stream_body_is_preserved_as_stream():
++    # A generator used as the body should be preserved and treated as a stream.
++    def gen():
++        yield b'part1'
++        yield b'part2'
++    g = gen()
++    req = requests.Request('POST', 'http://example.com', data=g).prepare()
++    # PreparedRequest.body should be the same generator/iterator object (or an iterable)
++    # We check that it's an iterator and yields the same contents when iterated.
++    assert hasattr(req.body, '__iter__')
++    assert b''.join(list(req.body)) == b'part1part2'
++
++def test_params_bytes_query_appears_in_url_when_params_given_as_bytes():
++    # Ensure bytes params are encoded into the query string (edge case).
++    req = requests.Request('GET', 'http://example.com/path', params=b'a=b&c=d').prepare()
++    assert 'a=b' in req.url and 'c=d' in req.url
++
+diff --git a/test_binary_body_extra.py b/test_binary_body_extra.py
+new file mode 100644
+index 0000000..a79abe0
+--- /dev/null
++++ b/test_binary_body_extra.py
+@@ -0,0 +1,13 @@
++# Additional tests for binary request body preservation.
++import requests
++
++def test_bytearray_data_preserved_in_prepared_request():
++    data = bytearray(u"ööö".encode("utf-8"))
++    req = requests.Request('POST', 'http://example.com', data=data).prepare()
++    # PreparedRequest.body should be exactly the same bytearray content (or bytes equivalent).
++    assert req.body == data
++
++def test_put_example_bytes_data_preserved():
++    data = u"ööö".encode("utf-8")
++    req = requests.Request('PUT', 'http://example.com', data=data).prepare()
++    assert req.body == data
+diff --git a/test_binary_body_more.py b/test_binary_body_more.py
+new file mode 100644
+index 0000000..05cd047
+--- /dev/null
++++ b/test_binary_body_more.py
+@@ -0,0 +1,22 @@
++# Additional tests for binary request body preservation and params-as-bytes
++import requests
++
++def test_bytearray_data_preserved_in_prepared_request():
++    data = bytearray(u"ööö".encode("utf-8"))
++    req = requests.Request('POST', 'http://example.com', data=data).prepare()
++    # PreparedRequest.body should be exactly the same bytearray content (or bytes equivalent).
++    assert req.body == data
++
++def test_memoryview_data_preserved_in_prepared_request():
++    data_bytes = u"ööö".encode("utf-8")
++    mv = memoryview(data_bytes)
++    req = requests.Request('PATCH', 'http://example.com', data=mv).prepare()
++    # For memoryview, PreparedRequest.body may be the memoryview or bytes-like;
++    # compare by content.
++    assert bytes(req.body) == data_bytes
++
++def test_params_are_accepted_as_bytes_for_url():
++    # params provided as bytes should be encoded into the URL query string
++    req = requests.Request('GET', 'http://example.com', params=b'test=foo').prepare()
++    # Ensure query part includes 'test=foo'
++    assert 'test=foo' in req.url
+diff --git a/test_binary_body_more2.py b/test_binary_body_more2.py
+new file mode 100644
+index 0000000..778a617
+--- /dev/null
++++ b/test_binary_body_more2.py
+@@ -0,0 +1,16 @@
++# Tests for file-like bytes preservation and Content-Type behavior for raw bytes.
++import io
++import requests
++
++def test_bytesio_data_preserved_in_prepared_request():
++    data = io.BytesIO(u"ööö".encode('utf-8'))
++    req = requests.Request('POST', 'http://example.com', data=data).prepare()
++    # For file-like objects, PreparedRequest.body should be the original file-like object.
++    assert req.body is data
++
++def test_no_content_type_added_for_raw_bytes():
++    data = u"ööö".encode('utf-8')
++    req = requests.Request('POST', 'http://example.com', data=data).prepare()
++    # If no Content-Type explicitly provided, binary raw bytes should not add a Content-Type header here.
++    # (prepare_body sets content_type = None for raw bytes, so header should not be present)
++    assert 'Content-Type' not in (h.lower() for h in req.headers.keys())

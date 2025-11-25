@@ -52,8 +52,11 @@ def process_instance(
         # Add environment functions to the agent
         agent.add_functions([env.run_bash_cmd])
         
-        # TODO(student): Add more functions here if needed
-        # agent.add_functions([env.replace_in_file, env.show_file, ...])
+        agent.add_functions([
+            env.generate_patch,
+            env.replace_in_file,
+            env.show_file,
+        ])
         
         # Run the agent
         output = agent.run(task, max_steps) 
@@ -92,7 +95,8 @@ def main(
     dataset_path = DATASET_MAPPING.get(subset, subset)
     print(f"Loading dataset {dataset_path}, split {split}...")
     instances = list(load_dataset(dataset_path, split=split))
-    # limit to 1 instance for testing
+    # # limit to 1 instance for testing
+    # print(f"Running on ONE instance for testing purposes...")
     # instances = instances[:1]
     print(f"Running on {len(instances)} instances...")
 

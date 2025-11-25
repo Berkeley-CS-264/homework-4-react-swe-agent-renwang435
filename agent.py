@@ -34,6 +34,7 @@ class ReactAgent:
 
         # Message list storage
         self.id_to_message: List[Dict[str, Any]] = []
+
         self.root_message_id: int = -1
         self.current_message_id: int = -1
 
@@ -42,8 +43,15 @@ class ReactAgent:
 
         # Set up the initial structure of the history
         # Create required root nodes and a user node (task)
-        self.system_message_id = self.add_message("system", "You are a Smart ReAct agent.")
+        self.system_message_id = self.add_message(
+            "system",
+            "You are a Smart ReAct agent. "
+            "You have access to tools that can help you solve software engineering "
+            "tasks. Think step by step, decide which single tool to call next, and "
+            "follow the function-call protocol described in the RESPONSE FORMAT.",
+        )
         self.user_message_id = self.add_message("user", "")
+
         # NOTE: mandatory finish function that terminates the agent
         self.add_functions([self.finish])
 
@@ -52,27 +60,40 @@ class ReactAgent:
         """
         Create a new message and add it to the list.
 
-        The message must include fields: role, content, timestamp, unique_id.
-        
-        TODO(student): Implement this function to add a message to the list
+        The message includes fields: role, content, timestamp, unique_id.
         """
-        raise NotImplementedError("add_message must be implemented by the student")
+        timestamp = time.time()
+        unique_id = len(self.id_to_message)
+
+        message = {
+            "role": role,
+            "content": content,
+            "timestamp": timestamp,
+            "unique_id": unique_id,
+        }
+        self.id_to_message.append(message)
+
+        if self.root_message_id == -1:
+            self.root_message_id = unique_id
+        self.current_message_id = unique_id
+        return unique_id
 
     def set_message_content(self, message_id: int, content: str) -> None:
         """
         Update message content by id.
-        
-        TODO(student): Implement this function to update a message's content
         """
-        raise NotImplementedError("set_message_content must be implemented by the student")
+        if not (0 <= message_id < len(self.id_to_message)):
+            raise IndexError(f"Invalid message_id {message_id}")
+        self.id_to_message[message_id]["content"] = content
 
     def get_context(self) -> str:
         """
-        Build the full LLM context from the message list.
-        
-        TODO(student): Implement this function to build the context from the message list
+        Build the full LLM context from the message list as a single string.
         """
-        raise NotImplementedError("get_context must be implemented by the student")
+        parts: List[str] = []
+        for mid in range(len(self.id_to_message)):
+            parts.append(self.message_id_to_context(mid))
+        return "".join(parts)
 
     # -------------------- REQUIRED TOOLS --------------------
     def add_functions(self, tools: List[Callable]):
@@ -82,11 +103,15 @@ class ReactAgent:
         The system prompt must include tool descriptions that cover:
         - The signature of each tool
         - The docstring of each tool
-        
-        TODO(student): Implement this function to register tools and build tool descriptions
         """
-        raise NotImplementedError("add_functions must be implemented by the student")
-    
+        for tool in tools:
+            if not callable(tool):
+                continue
+            name = getattr(tool, "__name__", None)
+            if not name:
+                continue
+            self.function_map[name] = tool
+
     def finish(self, result: str):
         """The agent must call this function with the final result when it has solved the given task. The function calls "git add -A and git diff --cached" to generate a patch and returns the patch as submission.
 
@@ -96,7 +121,7 @@ class ReactAgent:
         Returns:
             The result passed as an argument.  The result is then returned by the agent's run method.
         """
-        return result 
+        return result
 
     # -------------------- MAIN LOOP --------------------
     def run(self, task: str, max_steps: int) -> str:
@@ -110,49 +135,127 @@ class ReactAgent:
             - Execute the tool
             - Append tool result to the list
             - If `finish` is called, return the final result
-            
-        TODO(student): Implement the main ReAct loop
         """
+        # Cap max_steps at 100 as required
+        max_steps = min(int(max_steps), 100)
+
         # Set the user task message
-        # self.set_message_content(self.user_message_id, task)
-        
-        # Main ReAct loop
-        raise NotImplementedError("run method must be implemented by the student")
+        self.set_message_content(self.user_message_id, task)
+
+        final_result: str | None = None
+
+        for _ in range(max_steps):
+            # Build full text context
+            context = self.get_context()
+
+            # Wrap the context in a single-user message for the chat model
+            messages = [
+                {
+                    "role": "user",
+                    "content": context,
+                }
+            ]
+
+            # Query the LLM
+            llm_output = self.llm.generate(messages)
+
+            # Record the raw assistant message
+            self.add_message("assistant", llm_output)
+
+            # Parse the function call
+            parsed = self.parser.parse(llm_output)
+
+            if parsed is None:
+                # No valid function call found; continue to next step
+                self.add_message(
+                    "system",
+                    "Warning: No valid function call found in the assistant's response. "
+                    "Please ensure to follow the RESPONSE FORMAT.",
+                )
+                continue
+            
+            func_name = parsed.get("name", "")
+            arguments = parsed.get("arguments", {}) or {}
+
+            # Look up the tool
+            tool = self.function_map.get(func_name)
+            if tool is None:
+                tool_result = (
+                    f"Error: unknown function '{func_name}'. Available tools: "
+                    f"{', '.join(sorted(self.function_map.keys()))}."
+                )
+            else:
+                try:
+                    tool_result = tool(**arguments)
+                except TypeError as e:
+                    tool_result = f"Error calling function '{func_name}': {e}"
+                except Exception as e:
+                    tool_result = f"Tool '{func_name}' raised an exception: {e}"
+
+            # If the finish tool was called, stop and return its result
+            if tool is self.finish:
+                final_result = str(tool_result)
+                break
+
+            # Otherwise, append the tool result as a new user message so the LLM
+            # can condition on the observation in the next step.
+            observation = f"[Tool '{func_name}' output]\n{tool_result}"
+            self.add_message("user", observation)
+
+        if final_result is None:
+            # Did not reach finish within max_steps; return a diagnostic string.
+            final_result = (
+                f"Reached max_steps={max_steps} without calling finish. "
+            )
+
+        return final_result
 
     def message_id_to_context(self, message_id: int) -> str:
         """
         Helper function to convert a message id to a context string.
         """
         message = self.id_to_message[message_id]
-        header = f'----------------------------\n|MESSAGE(role="{message["role"]}", id={message["unique_id"]})|\n'
+        header = (
+            f'----------------------------\n'
+            f'|MESSAGE(role="{message["role"]}", id={message["unique_id"]})|\n'
+        )
         content = message["content"]
         if message["role"] == "system":
             tool_descriptions = []
             for tool in self.function_map.values():
                 signature = inspect.signature(tool)
-                docstring = inspect.getdoc(tool)
-                tool_description = f"Function: {tool.__name__}{signature}\n{docstring}\n"
+                docstring = inspect.getdoc(tool) or ""
+                tool_description = (
+                    f"Function: {tool.__name__}{signature}\n{docstring}\n"
+                )
                 tool_descriptions.append(tool_description)
 
-            tool_descriptions = "\n".join(tool_descriptions)
+            tool_text = "\n".join(tool_descriptions)
             return (
                 f"{header}{content}\n"
-                f"--- AVAILABLE TOOLS ---\n{tool_descriptions}\n\n"
+                f"--- AVAILABLE TOOLS ---\n{tool_text}\n\n"
                 f"--- RESPONSE FORMAT ---\n{self.parser.response_format}\n"
             )
         else:
             return f"{header}{content}\n"
 
+
 def main():
     from envs import DumbEnvironment
-    llm = OpenAIModel("----END_FUNCTION_CALL----", "gpt-4o-mini")
+
+    # llm = OpenAIModel("----END_FUNCTION_CALL----", "gpt-4o-mini")
+    llm = OpenAIModel("----END_FUNCTION_CALL----", "gpt-5-mini")
     parser = ResponseParser()
 
     env = DumbEnvironment()
     dumb_agent = ReactAgent("dumb-agent", parser, llm)
     dumb_agent.add_functions([env.run_bash_cmd])
-    result = dumb_agent.run("Show the contents of all files in the current directory.", max_steps=10)
+    result = dumb_agent.run(
+        # "Show the contents of all files in the current directory.", max_steps=10
+        "Show the contents of all files in the current directory.", max_steps=100
+    )
     print(result)
+
 
 if __name__ == "__main__":
     # Optional: students can add their own quick manual test here.

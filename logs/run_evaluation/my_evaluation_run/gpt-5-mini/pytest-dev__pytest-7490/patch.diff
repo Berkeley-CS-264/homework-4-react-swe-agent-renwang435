@@ -1,0 +1,96 @@
+diff --git a/src/_pytest/nodes.py b/src/_pytest/nodes.py
+index 560548aea..9a14bace1 100644
+--- a/src/_pytest/nodes.py
++++ b/src/_pytest/nodes.py
+@@ -258,6 +258,7 @@ class Node(metaclass=NodeMeta):
+         chain.reverse()
+         return chain
+ 
++    
+     def add_marker(
+         self, marker: Union[str, MarkDecorator], append: bool = True
+     ) -> None:
+@@ -282,6 +283,31 @@ class Node(metaclass=NodeMeta):
+         else:
+             self.own_markers.insert(0, marker_.mark)
+ 
++        # When markers are added dynamically at runtime (for example from within a
++        # test or a fixture via request.node.add_marker), cached evaluations of
++        # skip/xfail may prevent pytest from picking up the newly added marker.
++        # Clear any store entries that are used by the skipping logic so that
++        # evaluate_skip_marks / evaluate_xfail_marks are re-run when needed.
++        try:
++            # import here to avoid circular imports at module import time
++            from _pytest.skipping import xfailed_key, skipped_by_mark_key
++        except Exception:
++            # skipping may not be importable in some minimal contexts; ignore then
++            return
++
++        try:
++            if skipped_by_mark_key in self._store:
++                del self._store[skipped_by_mark_key]
++        except Exception:
++            pass
++        try:
++            if xfailed_key in self._store:
++                del self._store[xfailed_key]
++        except Exception:
++            pass
++
++
++
+     def iter_markers(self, name: Optional[str] = None) -> Iterator[Mark]:
+         """
+         :param name: if given, filter the results by the name attribute
+diff --git a/src/_pytest/skipping.py b/src/_pytest/skipping.py
+index 335e10996..647f744a1 100644
+--- a/src/_pytest/skipping.py
++++ b/src/_pytest/skipping.py
+@@ -261,7 +261,15 @@ def pytest_runtest_call(item: Item) -> Generator[None, None, None]:
+ def pytest_runtest_makereport(item: Item, call: CallInfo[None]):
+     outcome = yield
+     rep = outcome.get_result()
++    # Try to obtain a cached evaluation of xfail marks. It's possible that
++    # markers were added dynamically during the test call (for example via
++    # request.node.add_marker). In that case the xfail evaluation that may
++    # have been performed earlier (e.g. in pytest_runtest_call) could be
++    # missing or stale. If no cached value is present, re-evaluate here so
++    # dynamically-added xfail markers are honored in the report.
+     xfailed = item._store.get(xfailed_key, None)
++    if xfailed is None:
++        item._store[xfailed_key] = xfailed = evaluate_xfail_marks(item)
+     # unittest special case, see setting of unexpectedsuccess_key
+     if unexpectedsuccess_key in item._store and rep.when == "call":
+         reason = item._store[unexpectedsuccess_key]
+diff --git a/test_foo.py b/test_foo.py
+new file mode 100644
+index 000000000..71d3ed4e5
+--- /dev/null
++++ b/test_foo.py
+@@ -0,0 +1,6 @@
++import pytest
++
++def test_xfail_test(request):
++    mark = pytest.mark.xfail(reason="xfail")
++    request.node.add_marker(mark)
++    assert 0
+diff --git a/testing/python/test_dynamic_xfail.py b/testing/python/test_dynamic_xfail.py
+new file mode 100644
+index 000000000..f734b8ef0
+--- /dev/null
++++ b/testing/python/test_dynamic_xfail.py
+@@ -0,0 +1,14 @@
++import pytest
++
++# Xfail added in a fixture (setup) should mark the test as xfailed
++@pytest.fixture
++def add_xfail_fixture(request):
++    request.node.add_marker(pytest.mark.xfail(reason="xfail from fixture"))
++
++def test_dynamic_xfail_in_fixture(add_xfail_fixture):
++    assert 0
++
++# Xfail added directly inside the test should also be honored
++def test_dynamic_xfail_in_test(request):
++    request.node.add_marker(pytest.mark.xfail(reason="xfail from test"))
++    assert 0

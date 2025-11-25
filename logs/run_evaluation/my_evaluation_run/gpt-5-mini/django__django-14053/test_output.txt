@@ -1,0 +1,1015 @@
++ source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ '[' -z '' ']'
++++ export CONDA_SHLVL=0
++++ CONDA_SHLVL=0
++++ '[' -n '' ']'
++++++ dirname /opt/miniconda3/bin/conda
+++++ dirname /opt/miniconda3/bin
++++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export PATH
++++ '[' -z '' ']'
++++ PS1=
+++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+++ '[' -n '' ']'
+++ local ask_conda
++++ PS1=
++++ __conda_exe shell.posix activate
++++ /opt/miniconda3/bin/conda shell.posix activate
+++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=1
++++ CONDA_SHLVL=1
++++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+++ /opt/miniconda3/bin/conda shell.posix activate testbed
++ ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=2
+++ CONDA_SHLVL=2
+++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_1=/opt/miniconda3
+++ CONDA_PREFIX_1=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   django/contrib/staticfiles/storage.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git show
+commit 0027a62b0b3ec774b8abb3ef10b76f607793eb92
+Author: SWE-bench <setup@swebench.config>
+Date:   Wed Sep 10 11:44:44 2025 +0000
+
+    SWE-bench
++ git -c core.fileMode=false diff 179ee13eb37348cd87169a198aec18fedccc8668
+diff --git a/django/contrib/staticfiles/storage.py b/django/contrib/staticfiles/storage.py
+index 494890cc23..82ba91ebbc 100644
+--- a/django/contrib/staticfiles/storage.py
++++ b/django/contrib/staticfiles/storage.py
+@@ -228,25 +228,52 @@ class HashedFilesMixin:
+         ]
+         # Do a single pass first. Post-process all files once, then repeat for
+         # adjustable files.
++        # We collect non-exception results across passes and yield each original
++        # filename only once (with the final hashed name). Exceptions are yielded
++        # immediately so collectstatic can handle them as before.
++        results = {}  # name -> {'hashed_name': ..., 'processed': bool}
++
+         for name, hashed_name, processed, _ in self._post_process(paths, adjustable_paths, hashed_files):
+-            yield name, hashed_name, processed
++            # _post_process may yield exceptions; those come as processed being
++            # an Exception instance and are yielded immediately.
++            if isinstance(processed, Exception):
++                yield name, None, processed
++                continue
++            prev = results.get(name)
++            if prev:
++                # accumulate processed flag; keep latest hashed_name
++                prev['hashed_name'] = hashed_name
++                prev['processed'] = prev['processed'] or processed
++            else:
++                results[name] = {'hashed_name': hashed_name, 'processed': processed}
+ 
+         paths = {path: paths[path] for path in adjustable_paths}
+ 
++        substitutions = False
+         for i in range(self.max_post_process_passes):
+-            substitutions = False
++            any_subst = False
+             for name, hashed_name, processed, subst in self._post_process(paths, adjustable_paths, hashed_files):
+-                yield name, hashed_name, processed
+-                substitutions = substitutions or subst
+-
+-            if not substitutions:
++                if isinstance(processed, Exception):
++                    yield name, None, processed
++                    continue
++                prev = results.get(name)
++                if prev:
++                    prev['hashed_name'] = hashed_name
++                    prev['processed'] = prev['processed'] or processed
++                else:
++                    results[name] = {'hashed_name': hashed_name, 'processed': processed}
++                any_subst = any_subst or subst
++            substitutions = any_subst
++            if not any_subst:
+                 break
+ 
+         if substitutions:
++            # If we exceeded the max passes, yield the special exception as before.
+             yield 'All', None, RuntimeError('Max post-process passes exceeded.')
+-
+-        # Store the processed paths
+-        self.hashed_files.update(hashed_files)
++        else:
++            # Now yield each original filename only once with the final values.
++            for name, info in results.items():
++                yield name, info['hashed_name'], info['processed']
+ 
+     def _post_process(self, paths, adjustable_paths, hashed_files):
+         # Sort the files by directory level
++ source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ '[' -z x ']'
+++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+++ '[' -n '' ']'
+++ local ask_conda
++++ PS1='(testbed) '
++++ __conda_exe shell.posix activate
++++ /opt/miniconda3/bin/conda shell.posix activate
+++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''3'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_PREFIX_2='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''3'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_PREFIX_2='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=3
++++ CONDA_SHLVL=3
++++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_PREFIX_2=/opt/miniconda3/envs/testbed
++++ CONDA_PREFIX_2=/opt/miniconda3/envs/testbed
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+++ /opt/miniconda3/bin/conda shell.posix activate testbed
++ ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''4'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_3='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''4'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_3='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=4
+++ CONDA_SHLVL=4
+++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_3=/opt/miniconda3
+++ CONDA_PREFIX_3=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
++ python -m pip install -e .
+Obtaining file:///testbed
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: asgiref>=3.2.10 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from Django==4.0) (3.8.1)
+Requirement already satisfied: pytz in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from Django==4.0) (2024.2)
+Requirement already satisfied: sqlparse>=0.2.2 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from Django==4.0) (0.5.1)
+Requirement already satisfied: typing-extensions>=4 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from asgiref>=3.2.10->Django==4.0) (4.12.2)
+Building wheels for collected packages: Django
+  Building editable for Django (pyproject.toml): started
+  Building editable for Django (pyproject.toml): finished with status 'done'
+  Created wheel for Django: filename=django-4.0-0.editable-py3-none-any.whl size=25589 sha256=3eafd27e539db8ff80de6f60cc25ed8432038161f8e37b4870c08eb908218efb
+  Stored in directory: /tmp/pip-ephem-wheel-cache-ce8oumzm/wheels/b2/50/f1/218f2e9962a80d01a4b1297698978f9fb3b60056aa24343f24
+Successfully built Django
+Installing collected packages: Django
+  Attempting uninstall: Django
+    Found existing installation: Django 4.0
+    Uninstalling Django-4.0:
+      Successfully uninstalled Django-4.0
+Successfully installed Django-4.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
++ git checkout 179ee13eb37348cd87169a198aec18fedccc8668 tests/staticfiles_tests/test_storage.py
+Updated 0 paths from b7fb8bd4e8
++ git apply -v -
+Checking patch tests/staticfiles_tests/test_storage.py...
+Applied patch tests/staticfiles_tests/test_storage.py cleanly.
++ : '>>>>> Start Test Output'
++ ./tests/runtests.py --verbosity 2 --settings=test_sqlite --parallel 1 staticfiles_tests.test_storage
+test_file_change_after_collectstatic (staticfiles_tests.test_storage.TestCollectionHashedFilesCache) ... Testing against Django installed in '/testbed/django'
+Importing application staticfiles_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ERROR
+test_clear_empties_manifest (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... FAIL
+test_css_import_case_insensitive (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ERROR
+test_import_loop (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ok
+test_import_replacement (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+See #18050 ... ERROR
+test_intermediate_files (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ok
+test_loaded_cache (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... FAIL
+test_manifest_does_not_exist (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ok
+test_manifest_does_not_ignore_permission_error (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ok
+test_manifest_exists (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ok
+test_missing_entry (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ok
+test_parse_cache (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ok
+test_path_ignored_completely (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ERROR
+test_path_with_fragment (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ERROR
+test_path_with_querystring (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ERROR
+test_path_with_querystring_and_fragment (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ERROR
+test_post_processing (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+post_processing behaves correctly. ... ok
+test_post_processing_failure (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+post_processing indicates the origin of the error when it fails. ... ok
+test_template_tag_absolute (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ERROR
+test_template_tag_absolute_root (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+Like test_template_tag_absolute, but for a file in STATIC_ROOT (#26249). ... ERROR
+test_template_tag_deep_relative (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ERROR
+test_template_tag_relative (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ERROR
+test_template_tag_return (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ERROR
+test_template_tag_simple_content (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ERROR
+test_template_tag_url (staticfiles_tests.test_storage.TestCollectionManifestStorage) ... ERROR
+test_hashed_name (staticfiles_tests.test_storage.TestCollectionNoneHashStorage) ... ERROR
+test_template_tag_return (staticfiles_tests.test_storage.TestCollectionSimpleStorage) ... ERROR
+test_template_tag_simple_content (staticfiles_tests.test_storage.TestCollectionSimpleStorage) ... ERROR
+test_multi_extension_patterns (staticfiles_tests.test_storage.TestExtraPatternsStorage)
+With storage classes having several file extension patterns, only the ... ERROR
+test_collect_static_files_default_permissions (staticfiles_tests.test_storage.TestStaticFilePermissions) ... ok
+test_collect_static_files_permissions (staticfiles_tests.test_storage.TestStaticFilePermissions) ... ok
+test_collect_static_files_subclass_of_static_storage (staticfiles_tests.test_storage.TestStaticFilePermissions) ... ok
+
+======================================================================
+ERROR: test_file_change_after_collectstatic (staticfiles_tests.test_storage.TestCollectionHashedFilesCache)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 554, in test_file_change_after_collectstatic
+    relpath = self.hashed_file_path('test/bar.css')
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'test/bar.css'
+
+======================================================================
+ERROR: test_css_import_case_insensitive (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 211, in test_css_import_case_insensitive
+    relpath = self.hashed_file_path("cached/styles_insensitive.css")
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'cached/styles_insensitive.css'
+
+======================================================================
+ERROR: test_import_replacement (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+See #18050
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 145, in test_import_replacement
+    relpath = self.hashed_file_path("cached/import.css")
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'cached/import.css'
+
+======================================================================
+ERROR: test_path_ignored_completely (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 65, in test_path_ignored_completely
+    relpath = self.hashed_file_path("cached/css/ignored.css")
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'cached/css/ignored.css'
+
+======================================================================
+ERROR: test_path_with_fragment (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 87, in test_path_with_fragment
+    relpath = self.hashed_file_path("cached/styles.css#eggs")
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'cached/styles.css'
+
+======================================================================
+ERROR: test_path_with_querystring (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 78, in test_path_with_querystring
+    relpath = self.hashed_file_path("cached/styles.css?spam=eggs")
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'cached/styles.css'
+
+======================================================================
+ERROR: test_path_with_querystring_and_fragment (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 96, in test_path_with_querystring_and_fragment
+    relpath = self.hashed_file_path("cached/css/fragments.css")
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'cached/css/fragments.css'
+
+======================================================================
+ERROR: test_template_tag_absolute (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 108, in test_template_tag_absolute
+    relpath = self.hashed_file_path("cached/absolute.css")
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'cached/absolute.css'
+
+======================================================================
+ERROR: test_template_tag_absolute_root (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+Like test_template_tag_absolute, but for a file in STATIC_ROOT (#26249).
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 123, in test_template_tag_absolute_root
+    relpath = self.hashed_file_path("absolute_root.css")
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'absolute_root.css'
+
+======================================================================
+ERROR: test_template_tag_deep_relative (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 152, in test_template_tag_deep_relative
+    relpath = self.hashed_file_path("cached/css/window.css")
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'cached/css/window.css'
+
+======================================================================
+ERROR: test_template_tag_relative (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 132, in test_template_tag_relative
+    relpath = self.hashed_file_path("cached/relative.css")
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'cached/relative.css'
+
+======================================================================
+ERROR: test_template_tag_return (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 48, in test_template_tag_return
+    self.assertStaticRenders("test/file.txt", "/static/test/file.dad0999e4f8f.txt")
+  File "/testbed/tests/staticfiles_tests/cases.py", line 41, in assertStaticRenders
+    self.assertEqual(self.render_template(template, **kwargs), result)
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'test/file.txt'
+
+======================================================================
+ERROR: test_template_tag_simple_content (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 56, in test_template_tag_simple_content
+    relpath = self.hashed_file_path("cached/styles.css")
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'cached/styles.css'
+
+======================================================================
+ERROR: test_template_tag_url (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 161, in test_template_tag_url
+    relpath = self.hashed_file_path("cached/url.css")
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'cached/url.css'
+
+======================================================================
+ERROR: test_hashed_name (staticfiles_tests.test_storage.TestCollectionNoneHashStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 397, in test_hashed_name
+    relpath = self.hashed_file_path('cached/styles.css')
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'cached/styles.css'
+
+======================================================================
+ERROR: test_template_tag_return (staticfiles_tests.test_storage.TestCollectionSimpleStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 411, in test_template_tag_return
+    self.assertStaticRenders("test/file.txt", "/static/test/file.deploy12345.txt")
+  File "/testbed/tests/staticfiles_tests/cases.py", line 41, in assertStaticRenders
+    self.assertEqual(self.render_template(template, **kwargs), result)
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'test/file.txt'
+
+======================================================================
+ERROR: test_template_tag_simple_content (staticfiles_tests.test_storage.TestCollectionSimpleStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 417, in test_template_tag_simple_content
+    relpath = self.hashed_file_path("cached/styles.css")
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 23, in hashed_file_path
+    fullpath = test.render_template(test.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'cached/styles.css'
+
+======================================================================
+ERROR: test_multi_extension_patterns (staticfiles_tests.test_storage.TestExtraPatternsStorage)
+With storage classes having several file extension patterns, only the
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 253, in test_multi_extension_patterns
+    relpath = self.cached_file_path("cached/import.css")
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 243, in cached_file_path
+    fullpath = self.render_template(self.static_template_snippet(path))
+  File "/testbed/tests/staticfiles_tests/cases.py", line 32, in render_template
+    return template.render(Context(**kwargs)).strip()
+  File "/testbed/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/testbed/django/test/utils.py", line 101, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/testbed/django/template/base.py", line 951, in render
+    bit = node.render_annotated(context)
+  File "/testbed/django/template/base.py", line 918, in render_annotated
+    return self.render(context)
+  File "/testbed/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/testbed/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/testbed/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 147, in url
+    return self._url(self.stored_name, name, force)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 126, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/testbed/django/contrib/staticfiles/storage.py", line 444, in stored_name
+    raise ValueError("Missing staticfiles manifest entry for '%s'" % clean_name)
+ValueError: Missing staticfiles manifest entry for 'cached/import.css'
+
+======================================================================
+FAIL: test_clear_empties_manifest (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 338, in test_clear_empties_manifest
+    self.assertIn(cleared_file_name, hashed_files)
+AssertionError: 'test/cleared.txt' not found in {}
+
+======================================================================
+FAIL: test_loaded_cache (staticfiles_tests.test_storage.TestCollectionManifestStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/testbed/tests/staticfiles_tests/test_storage.py", line 320, in test_loaded_cache
+    self.assertNotEqual(storage.staticfiles_storage.hashed_files, {})
+AssertionError: {} == {}
+
+----------------------------------------------------------------------
+Ran 32 tests in 0.867s
+
+FAILED (failures=2, errors=18)
++ : '>>>>> End Test Output'
++ git checkout 179ee13eb37348cd87169a198aec18fedccc8668 tests/staticfiles_tests/test_storage.py
+Updated 1 path from b7fb8bd4e8

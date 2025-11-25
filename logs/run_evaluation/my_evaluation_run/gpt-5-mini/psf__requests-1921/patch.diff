@@ -1,0 +1,78 @@
+diff --git a/pytest_out.txt b/pytest_out.txt
+new file mode 100644
+index 0000000..ec04ca8
+--- /dev/null
++++ b/pytest_out.txt
+@@ -0,0 +1,55 @@
++....................F................................................... [ 61%]
++...F..........................................                           [100%]
++=================================== FAILURES ===================================
++________________ RequestsTestCase.test_conflicting_post_params _________________
++
++self = <test_requests.RequestsTestCase testMethod=test_conflicting_post_params>
++
++    def test_conflicting_post_params(self):
++        url = httpbin('post')
++        with open('requirements.txt') as f:
++>           pytest.raises(ValueError, "requests.post(url, data='[{\"some\": \"data\"}]', files={'some': f})")
++E           TypeError: 'requests.post(url, data=\'[{"some": "data"}]\', files={\'some\': f})' object (type: <class 'str'>) must be callable
++
++test_requests.py:387: TypeError
++_________________ RequestsTestCase.test_unicode_multipart_post _________________
++
++self = <test_requests.RequestsTestCase testMethod=test_unicode_multipart_post>
++
++    def test_unicode_multipart_post(self):
++        r = requests.post(httpbin('post'),
++                          data={'stuff': u'ëlïxr'},
++                          files={'file': ('test_requests.py', open(__file__, 'rb'))})
++        assert r.status_code == 200
++    
++        r = requests.post(httpbin('post'),
++                          data={'stuff': u'ëlïxr'.encode('utf-8')},
++                          files={'file': ('test_requests.py', open(__file__, 'rb'))})
++        assert r.status_code == 200
++    
++        r = requests.post(httpbin('post'),
++                          data={'stuff': 'elixr'},
++                          files={'file': ('test_requests.py', open(__file__, 'rb'))})
++>       assert r.status_code == 200
++E       assert 502 == 200
++E        +  where 502 = <Response [502]>.status_code
++
++test_requests.py:447: AssertionError
++=============================== warnings summary ===============================
++requests/packages/urllib3/_collections.py:7
++  /testbed/requests/packages/urllib3/_collections.py:7: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
++    from collections import MutableMapping
++
++requests/sessions.py:12
++  /testbed/requests/sessions.py:12: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
++    from collections import Mapping
++
++test_requests.py::RequestsTestCase::test_BASICAUTH_TUPLE_HTTP_200_OK_GET
++  /testbed/requests/models.py:164: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
++    if isinstance(hook, collections.Callable):
++
++-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
++=========================== short test summary info ============================
++FAILED test_requests.py::RequestsTestCase::test_conflicting_post_params - Typ...
++FAILED test_requests.py::RequestsTestCase::test_unicode_multipart_post - asse...
++2 failed, 116 passed, 3 warnings in 294.01s (0:04:54)
+diff --git a/requests/models.py b/requests/models.py
+index cd232e6..2af97ab 100644
+--- a/requests/models.py
++++ b/requests/models.py
+@@ -391,7 +391,11 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
+         """Prepares the given HTTP headers."""
+ 
+         if headers:
+-            self.headers = CaseInsensitiveDict((to_native_string(name), value) for name, value in headers.items())
++            self.headers = CaseInsensitiveDict(
++                (to_native_string(name), value)
++                for name, value in headers.items()
++                if value is not None
++            )
+         else:
+             self.headers = CaseInsensitiveDict()
+ 

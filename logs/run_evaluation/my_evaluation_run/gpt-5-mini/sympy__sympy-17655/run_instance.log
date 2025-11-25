@@ -1,0 +1,105 @@
+2025-11-25 01:20:39,651 - INFO - Creating container for sympy__sympy-17655...
+2025-11-25 01:20:39,676 - INFO - Container for sympy__sympy-17655 created: c3f98c44b6b2a104e00117892f0b5d1bce1463e8b73f93579c6e46bbc3bfcd95
+2025-11-25 01:20:40,341 - INFO - Container for sympy__sympy-17655 started: c3f98c44b6b2a104e00117892f0b5d1bce1463e8b73f93579c6e46bbc3bfcd95
+2025-11-25 01:20:40,341 - INFO - Intermediate patch for sympy__sympy-17655 written to logs/run_evaluation/my_evaluation_run/gpt-5-mini/sympy__sympy-17655/patch.diff, now applying to container...
+2025-11-25 01:20:40,521 - INFO - >>>>> Applied Patch:
+Checking patch sympy/geometry/point.py...
+Applied patch sympy/geometry/point.py cleanly.
+
+2025-11-25 01:20:40,924 - INFO - Git diff before:
+diff --git a/sympy/geometry/point.py b/sympy/geometry/point.py
+index 7c978c47be..7de269d2c9 100644
+--- a/sympy/geometry/point.py
++++ b/sympy/geometry/point.py
+@@ -216,8 +216,29 @@ def __add__(self, other):
+         try:
+             s, o = Point._normalize_dimension(self, Point(other, evaluate=False))
+         except TypeError:
+-            raise GeometryError("Don't know how to add {} and a Point object".format(other))
+-
++            # Allow adding expressions like scalar * Point, e.g. 2*Point(1, 1).
++            # Point(other) doesn't accept a Mul; detect a Mul with a Point
++            # factor, extract the Point and scalar, create the scaled Point
++            # and continue as normal.
++            if getattr(other, 'is_Mul', False):
++                # find exactly one Point factor in the Mul; if found,
++                # multiply the remaining factors to get the scalar.
++                point_factors = [a for a in other.args if isinstance(a, Point)]
++                if len(point_factors) == 1:
++                    pt = point_factors[0]
++                    scalar = S.One
++                    for a in other.args:
++                        if a is not pt:
++                            scalar = scalar * a
++                    scaled_point = pt * scalar
++                    try:
++                        s, o = Point._normalize_dimension(self, Point(scaled_point, evaluate=False))
++                    except TypeError:
++                        raise GeometryError("Don't know how to add {} and a Point object".format(other))
++                else:
++                    raise GeometryError("Don't know how to add {} and a Point object".format(other))
++            else:
++                raise GeometryError("Don't know how to add {} and a Point object".format(other))
+         coords = [simplify(a + b) for a, b in zip(s, o)]
+         return Point(coords, evaluate=False)
+ 
+@@ -1348,4 +1369,4 @@ def z(self):
+         >>> p.z
+         1
+         """
+-        return self.args[2]
++        return self.args[2]
+\ No newline at end of file
+2025-11-25 01:20:40,924 - INFO - Eval script for sympy__sympy-17655 written to logs/run_evaluation/my_evaluation_run/gpt-5-mini/sympy__sympy-17655/eval.sh; copying to container...
+2025-11-25 01:20:53,614 - INFO - Test runtime: 12.59 seconds
+2025-11-25 01:20:53,614 - INFO - Test output for sympy__sympy-17655 written to logs/run_evaluation/my_evaluation_run/gpt-5-mini/sympy__sympy-17655/test_output.txt
+2025-11-25 01:20:53,697 - INFO - Git diff after:
+diff --git a/sympy/geometry/point.py b/sympy/geometry/point.py
+index 7c978c47be..7de269d2c9 100644
+--- a/sympy/geometry/point.py
++++ b/sympy/geometry/point.py
+@@ -216,8 +216,29 @@ def __add__(self, other):
+         try:
+             s, o = Point._normalize_dimension(self, Point(other, evaluate=False))
+         except TypeError:
+-            raise GeometryError("Don't know how to add {} and a Point object".format(other))
+-
++            # Allow adding expressions like scalar * Point, e.g. 2*Point(1, 1).
++            # Point(other) doesn't accept a Mul; detect a Mul with a Point
++            # factor, extract the Point and scalar, create the scaled Point
++            # and continue as normal.
++            if getattr(other, 'is_Mul', False):
++                # find exactly one Point factor in the Mul; if found,
++                # multiply the remaining factors to get the scalar.
++                point_factors = [a for a in other.args if isinstance(a, Point)]
++                if len(point_factors) == 1:
++                    pt = point_factors[0]
++                    scalar = S.One
++                    for a in other.args:
++                        if a is not pt:
++                            scalar = scalar * a
++                    scaled_point = pt * scalar
++                    try:
++                        s, o = Point._normalize_dimension(self, Point(scaled_point, evaluate=False))
++                    except TypeError:
++                        raise GeometryError("Don't know how to add {} and a Point object".format(other))
++                else:
++                    raise GeometryError("Don't know how to add {} and a Point object".format(other))
++            else:
++                raise GeometryError("Don't know how to add {} and a Point object".format(other))
+         coords = [simplify(a + b) for a, b in zip(s, o)]
+         return Point(coords, evaluate=False)
+ 
+@@ -1348,4 +1369,4 @@ def z(self):
+         >>> p.z
+         1
+         """
+-        return self.args[2]
++        return self.args[2]
+\ No newline at end of file
+2025-11-25 01:20:53,698 - INFO - Grading answer for sympy__sympy-17655...
+2025-11-25 01:20:53,698 - INFO - report: {'sympy__sympy-17655': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': False, 'tests_status': {'FAIL_TO_PASS': {'success': [], 'failure': ['test_point', 'test_point3D']}, 'PASS_TO_PASS': {'success': ['test_Point2D', 'test_issue_9214', 'test_issue_11617', 'test_transform', 'test_concyclic_doctest_bug', 'test_arguments', 'test_unit', 'test_dot', 'test__normalize_dimension'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-17655: resolved: False
+2025-11-25 01:20:53,698 - INFO - Attempting to stop container sweb.eval.sympy__sympy-17655.my_evaluation_run...
+2025-11-25 01:21:09,019 - INFO - Attempting to remove container sweb.eval.sympy__sympy-17655.my_evaluation_run...
+2025-11-25 01:21:09,040 - INFO - Container sweb.eval.sympy__sympy-17655.my_evaluation_run removed.
